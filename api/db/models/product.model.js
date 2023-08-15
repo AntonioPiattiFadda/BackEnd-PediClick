@@ -48,12 +48,16 @@ const ProductSchema = {
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
-  },
+  }
 };
 
 class Product extends Model {
   static associate(models) {
     this.belongsTo(models.Category, { as: 'category' });
+    this.hasMany(models.UnitPrice, {
+      as: 'unit_price',
+      foreignKey: 'productId',
+    });
   }
 
   static config(sequelize) {
