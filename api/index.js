@@ -19,9 +19,7 @@ app.use(express.json());
 const whitelist = [
   'http://localhost:8080',
   'http://localhost:3000',
-  'https://client-interface-order-solutions-production.up.railway.app',
-  'https://admin-eshop-production.up.railway.app',
-  'https://admin-eshop-psi.vercel.app',
+  'https://pediclick-admin-git-main-antoniopiattifadda.vercel.app',
   'https://interface-cliente-react-os.vercel.app',
 ];
 const options = {
