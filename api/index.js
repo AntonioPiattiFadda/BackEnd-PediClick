@@ -24,6 +24,7 @@ const whitelist = [
   'https://pediclick-admin.vercel.app',
   'https://interface-cliente-react-os.vercel.app',
   'https://admin-eshop-psi.vercel.app',
+  'Ejemplo',
 ];
 const options = {
   origin: (origin, callback) => {
