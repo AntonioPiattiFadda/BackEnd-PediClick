@@ -23,6 +23,7 @@ const whitelist = [
   'https://admin-eshop-production.up.railway.app',
   'https://pediclick-admin.vercel.app',
   'https://interface-cliente-react-os.vercel.app',
+  'https://admin-eshop-psi.vercel.app',
 ];
 const options = {
   origin: (origin, callback) => {

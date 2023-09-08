@@ -41,7 +41,9 @@ class AuthService {
       await service.update(user.id, { recoveryToken: null, password: hash });
       return { message: 'Password has been changed' };
     } catch (error) {
-      throw boom.unauthorized('Falla en la busqueda del token');
+      throw boom.unauthorized(
+        'No puedes cambiar la password. Contactate con el equipo de soporte.'
+      );
     }
   }
 
@@ -52,13 +54,14 @@ class AuthService {
     }
     const payload = { sub: user.id };
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '15min' });
-    const link = `https://myLandindPage.com/recovery?token=${token}`;
+    const link = `${config.changePasswordLink}?token=${token}`;
     await service.update(user.id, { recoveryToken: token });
     const mail = {
       from: config.nodeMailUser, // sender address
       to: user.email, // list of receivers
-      subject: 'Email para recuperar tu cuenta', // Subject line
+      subject: 'Recuperar cuenta Pediclick', // Subject line
       //text: "Hello worlsdfd?", // plain text body
+      //TODO - Hacer el formato de la informacion qu el ellega por mail.
       html: `<b>Ingresa a este link: ${link} para recuperar la contraseña.</b>`, // html body
     };
     const rta = await this.sendMail(mail);
@@ -78,7 +81,7 @@ class AuthService {
     });
 
     // send mail with defined transport object
-    let info = await transporter.sendMail(infoMail);
+    await transporter.sendMail(infoMail);
     return { message: 'Mail sent' };
   }
 }

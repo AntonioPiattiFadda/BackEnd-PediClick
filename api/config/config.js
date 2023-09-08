@@ -10,6 +10,7 @@ const config = {
   jwtSecret: process.env.JWT_SECRET,
   nodeMailUser: process.env.NODEMAIL_USER,
   nodeMailPassword: process.env.NODEMAIL_PASSWORD,
+  changePasswordLink: process.env.CHANGE_PASSWORD_LINK,
 };
 
 module.exports = { config };
