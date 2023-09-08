@@ -20,6 +20,14 @@ router.get('/', async (req, res, next) => {
     next(error);
   }
 });
+router.get('/allItems', async (req, res, next) => {
+  try {
+    const categories = await service.findWithItems();
+    res.json(categories);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get(
   '/:id',

@@ -10,6 +10,10 @@ class CategoryService {
 
   //NOTE - Me conviene hacer dos endpoint y que uno traiga los productos y el otro no??
   async find() {
+    const categories = await models.Category.findAll();
+    return categories;
+  }
+  async findWithItems() {
     const categories = await models.Category.findAll({
       include: ['products'],
     });
