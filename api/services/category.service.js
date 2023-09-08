@@ -1,3 +1,4 @@
+const boom = require('@hapi/boom');
 const { models } = require('./../libs/sequelize');
 
 class CategoryService {
@@ -7,8 +8,11 @@ class CategoryService {
     return newCategory;
   }
 
+  //NOTE - Me conviene hacer dos endpoint y que uno traiga los productos y el otro no??
   async find() {
-    const categories = await models.Category.findAll();
+    const categories = await models.Category.findAll({
+      include: ['products'],
+    });
     return categories;
   }
 
@@ -16,17 +20,32 @@ class CategoryService {
     const category = await models.Category.findByPk(id, {
       include: ['products'],
     });
+    if (!category) {
+      throw boom.notFound('category not found');
+    }
     return category;
   }
 
-  async update(id, changes) {
-    return {
-      id,
-      changes,
-    };
+  async update(id, updatedData) {
+    const category = await this.findOne(id);
+    if (!category) {
+      throw boom.notFound('category not found');
+    }
+    await models.Category.update(updatedData, {
+      where: { id },
+    });
+    const updatedCategory = await models.Category.findByPk(id);
+    return updatedCategory;
   }
 
   async delete(id) {
+    const category = await models.Category.findByPk(id);
+    if (!category) {
+      throw boom.notFound('product not found');
+    }
+    await models.Category.destroy({
+      where: { id },
+    });
     return { id };
   }
 }
