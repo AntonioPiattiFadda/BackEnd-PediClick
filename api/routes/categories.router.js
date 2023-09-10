@@ -45,8 +45,8 @@ router.get(
 
 router.post(
   '/',
-  passport.authenticate('jwt', { session: false }),
-  checkRoles('admin', 'customer'),
+  // passport.authenticate('jwt', { session: false }),
+  // checkRoles('admin', 'customer'),
   validatorHandler(createCategorySchema, 'body'),
   async (req, res, next) => {
     try {
