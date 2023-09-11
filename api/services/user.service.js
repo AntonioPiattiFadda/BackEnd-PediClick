@@ -34,6 +34,7 @@ class UserService {
   async findByEmail(email) {
     const user = await models.User.findOne({
       where: { email },
+      include: ['customer'],
     });
     if (!user) {
       throw boom.unauthorized();
