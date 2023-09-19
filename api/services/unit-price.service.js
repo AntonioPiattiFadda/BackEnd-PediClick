@@ -1,25 +1,9 @@
-const faker = require('faker');
 const boom = require('@hapi/boom');
-
 const { models } = require('../libs/sequelize');
 
 class UnitPriceService {
   constructor() {
     this.unitPrices = [];
-    this.generate();
-  }
-
-  generate() {
-    const limit = 100;
-    for (let index = 0; index < limit; index++) {
-      this.unitPrices.push({
-        id: faker.datatype.uuid(),
-        name: faker.commerce.productName(),
-        price: parseInt(faker.commerce.price(), 10),
-        image: faker.image.imageUrl(),
-        isBlock: faker.datatype.boolean(),
-      });
-    }
   }
 
   async create(data) {

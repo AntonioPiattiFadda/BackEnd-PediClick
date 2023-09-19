@@ -24,10 +24,14 @@ const UnitPriceSchema = {
     ),
     allowNull: false,
   },
-
   value: {
     type: DataTypes.INTEGER,
     allowNull: false,
+  },
+  blocked: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
   },
   productId: {
     field: 'product_id',
