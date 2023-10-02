@@ -1,4 +1,4 @@
-const { Op, sequelize } = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
@@ -8,7 +8,7 @@ class ProductsService {
     this.products = [];
   }
   async create(data, unitPrice) {
-    const transaction = await sequelize.transaction();
+    const transaction = await Sequelize.transaction();
     try {
       const newProduct = await models.Product.create(data, {
         transaction: transaction,
