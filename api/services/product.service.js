@@ -7,12 +7,24 @@ class ProductsService {
   constructor() {
     this.products = [];
   }
+  async create(data, unitPrice) {
+    let transaction;
 
-
-
-  async create(data) {
-    const newProduct = await models.Product.create(data);
-    return newProduct;
+    try {
+      transaction = await models.sequelize.transaction();
+      const newProduct = await models.Product.create(data, { transaction });
+      unitPrice.productId = newProduct.id;
+      await models.UnitPrice.create(unitPrice, {
+        transaction,
+      });
+      await transaction.commit();
+      return newProduct;
+    } catch (error) {
+      if (transaction) {
+        await transaction.rollback();
+      }
+      throw error;
+    }
   }
 
   async find(query) {

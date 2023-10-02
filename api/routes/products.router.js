@@ -41,17 +41,19 @@ router.get(
 );
 
 router.post(
-  '/',
-  validatorHandler(createProductSchema, 'body'),
-  async (req, res, next) => {
-    try {
-      const body = req.body;
-      const newProduct = await service.create(body);
-      res.status(201).json(newProduct);
-    } catch (error) {
-      next(error);
+  router.post(
+    '/',
+    validatorHandler(createProductSchema, 'body'),
+    async (req, res, next) => {
+      try {
+        const { unit_price, ...productData } = req.body;
+        const newProduct = await service.create(productData, unit_price);
+        res.status(201).json(newProduct);
+      } catch (error) {
+        next(error);
+      }
     }
-  }
+  )
 );
 
 router.patch(

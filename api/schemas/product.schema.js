@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const { createUnitPriceSchema } = require('./unit-price.schema');
 
 const id = Joi.number().integer();
 const name = Joi.string().min(3).max(15);
@@ -20,6 +21,7 @@ const createProductSchema = Joi.object({
   description: description.required(),
   image: image.required(),
   categoryId: categoryId.required(),
+  unitPrices: Joi.array().items(createUnitPriceSchema).required(),
 });
 
 const updateProductSchema = Joi.object({

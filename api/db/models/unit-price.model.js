@@ -12,10 +12,13 @@ const UnitPriceSchema = {
   },
   name: {
     type: DataTypes.ENUM(
+      'Unidad',
       '1kg',
       '100gr',
+      '200gr',
+      '300gr',
       '500gr',
-      'dozen',
+      'Docena',
       '2kg',
       '3kg',
       '4kg',
