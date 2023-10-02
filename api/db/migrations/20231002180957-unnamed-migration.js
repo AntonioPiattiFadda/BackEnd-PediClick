@@ -21,7 +21,7 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface, Sequelize) => {git
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.changeColumn(UNIT_PRICE_TABLE, 'name', {
       type: Sequelize.DataTypes.ENUM(
         '1kg',
