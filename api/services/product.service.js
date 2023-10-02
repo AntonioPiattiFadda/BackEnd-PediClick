@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+const { Op, sequelize } = require('sequelize');
 const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
@@ -8,22 +8,19 @@ class ProductsService {
     this.products = [];
   }
   async create(data, unitPrice) {
-    let transaction;
-
+    const transaction = await sequelize.transaction();
     try {
-      transaction = await models.sequelize.transaction();
-      const newProduct = await models.Product.create(data, { transaction });
+      const newProduct = await models.Product.create(data, {
+        transaction: transaction,
+      });
       unitPrice.productId = newProduct.id;
       await models.UnitPrice.create(unitPrice, {
-        transaction,
+        transaction: transaction,
       });
       await transaction.commit();
       return newProduct;
     } catch (error) {
-      if (transaction) {
-        await transaction.rollback();
-      }
-      throw error;
+      await transaction.rollback();
     }
   }
 
