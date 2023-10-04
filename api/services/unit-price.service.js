@@ -56,10 +56,21 @@ class UnitPriceService {
     if (!unitPrice) {
       throw boom.notFound('Unit price not found');
     }
-    await models.UnitPrice.destroy({
-      where: { id },
+    const count = await models.UnitPrice.count({
+      where: {
+        productId: unitPrice.productId,
+      },
     });
-    return { id };
+    if (count > 1) {
+      await models.UnitPrice.destroy({
+        where: { id },
+      });
+      return { id };
+    } else {
+      throw boom.badRequest(
+        'No puedes eliminar el ultimo precio, agrega otro primero'
+      );
+    }
   }
 }
 

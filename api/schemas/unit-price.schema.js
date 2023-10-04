@@ -10,6 +10,10 @@ const getUnitPriceSchema = Joi.object({
   id: id.required(),
 });
 
+const createUnitPriceSchemaWithProducts = Joi.object({
+  name: name.required(),
+  value: value.required(),
+});
 const createUnitPriceSchema = Joi.object({
   name: name.required(),
   value: value.required(),
@@ -23,9 +27,9 @@ const updateUnitPriceSchema = Joi.object({
   blocked,
 });
 
-
 module.exports = {
   getUnitPriceSchema,
   createUnitPriceSchema,
+  createUnitPriceSchemaWithProducts,
   updateUnitPriceSchema,
 };

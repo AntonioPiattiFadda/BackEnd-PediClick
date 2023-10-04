@@ -46,8 +46,8 @@ router.post(
     validatorHandler(createProductSchema, 'body'),
     async (req, res, next) => {
       try {
-        const { unit_price, ...productData } = req.body;
-        const newProduct = await service.create(productData, unit_price);
+        const { unitPrices, product } = req.body;
+        const newProduct = await service.create(product, unitPrices);
         res.status(201).json(newProduct);
       } catch (error) {
         next(error);

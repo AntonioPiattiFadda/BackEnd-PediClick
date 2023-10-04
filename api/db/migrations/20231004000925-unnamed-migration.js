@@ -1,16 +1,16 @@
 'use strict';
-const { UNIT_PRICE_TABLE } = require('./../models/unit-price.model');
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.changeColumn(UNIT_PRICE_TABLE, 'name', {
+    await queryInterface.changeColumn('unit_price', 'name', {
       type: Sequelize.DataTypes.ENUM(
-        'Unidad',
+        'unidad',
         '1kg',
         '100gr',
         '200gr',
         '300gr',
         '500gr',
-        'Docena',
+        'docena',
         '2kg',
         '3kg',
         '4kg',
@@ -22,7 +22,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.changeColumn(UNIT_PRICE_TABLE, 'name', {
+    await queryInterface.changeColumn('unit_price', 'name', {
       type: Sequelize.DataTypes.ENUM(
         '1kg',
         '100gr',

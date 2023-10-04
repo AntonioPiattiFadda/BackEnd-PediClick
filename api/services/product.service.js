@@ -1,26 +1,39 @@
-const { Op, Sequelize } = require('sequelize');
+const { Op } = require('sequelize');
 const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
+const sequelize = require('../libs/sequelize');
 
 class ProductsService {
   constructor() {
     this.products = [];
   }
   async create(data, unitPrice) {
-    const transaction = await Sequelize.transaction();
+    const transaction = await sequelize.transaction();
     try {
       const newProduct = await models.Product.create(data, {
         transaction: transaction,
       });
-      unitPrice.productId = newProduct.id;
-      await models.UnitPrice.create(unitPrice, {
-        transaction: transaction,
+      unitPrice.forEach((element) => {
+        element.productId = newProduct.id;
       });
+
+      await Promise.all(
+        unitPrice.map((element) => {
+          return models.UnitPrice.create(element, {
+            transaction: transaction,
+          });
+        })
+      );
       await transaction.commit();
-      return newProduct;
+
+      return { newProduct, unitPrice };
     } catch (error) {
       await transaction.rollback();
+      return {
+        msg: 'error',
+        error: error,
+      };
     }
   }
 
@@ -80,6 +93,16 @@ class ProductsService {
   }
 
   async delete(id) {
+    // Tengo que elimnar los unit_price asociados al producto
+    const unitPrice = await models.UnitPrice.findAll({
+      where: { productId: id },
+    });
+    if (!unitPrice) {
+      throw boom.notFound('Unit price not found');
+    }
+    await models.UnitPrice.destroy({
+      where: { productId: id },
+    });
     const product = await models.Product.findByPk(id);
     if (!product) {
       throw boom.notFound('product not found');
