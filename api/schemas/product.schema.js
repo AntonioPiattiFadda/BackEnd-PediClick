@@ -11,6 +11,7 @@ const blocked = Joi.boolean();
 
 const price_min = Joi.number().integer();
 const price_max = Joi.number().integer();
+const unitPrices = Joi.array().items(createUnitPriceSchemaWithProducts);
 
 const limit = Joi.number().integer();
 const offset = Joi.number().integer();
@@ -24,7 +25,7 @@ const product = Joi.object({
 
 const createProductSchema = Joi.object({
   product: product,
-  unitPrices: Joi.array().items(createUnitPriceSchemaWithProducts).required(),
+  unitPrices: unitPrices.min(1).required(),
 });
 
 const updateProductSchema = Joi.object({
