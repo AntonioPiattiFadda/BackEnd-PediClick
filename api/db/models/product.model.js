@@ -48,7 +48,7 @@ const ProductSchema = {
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
-  }
+  },
 };
 
 class Product extends Model {
