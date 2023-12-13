@@ -36,6 +36,18 @@ class UnitPriceService {
     return unitPrice;
   }
 
+  async findAllForOneProduct(id) {
+    const product = await models.Product.findByPk(id, {
+      include: ['unit_price'],
+    });
+    if (!product) {
+      throw boom.notFound('unit prices not founded');
+    }
+    const unitPrices = product.unit_price.map((price) => price.toJSON());
+
+    return unitPrices;
+  }
+
   async update(id, updatedData) {
     const unitPrice = await models.UnitPrice.findByPk(id);
     if (!unitPrice) {

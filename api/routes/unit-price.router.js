@@ -2,7 +2,12 @@ const express = require('express');
 
 const UnitPriceService = require('../services/unit-price.service');
 const validatorHandler = require('./../middlewares/validator.handler');
-const { createUnitPriceSchema, getUnitPriceSchema, updateUnitPriceSchema } = require('../schemas/unit-price.schema');
+const {
+  createUnitPriceSchema,
+  getUnitPriceSchema,
+  updateUnitPriceSchema,
+  getAllProductUnitPricesSchema,
+} = require('../schemas/unit-price.schema');
 
 const router = express.Router();
 const service = new UnitPriceService();
@@ -15,17 +20,34 @@ router.get('/', async (req, res, next) => {
     next(error);
   }
 });
-router.get('/:id',
-  validatorHandler(getUnitPriceSchema, 'params'),
+// router.get(
+//   '/:id',
+//   validatorHandler(getUnitPriceSchema, 'params'),
+//   async (req, res, next) => {
+//     try {
+//       const { id } = req.params;
+//       const unitPrice = await service.findOne(id);
+//       res.json(unitPrice);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+
+router.get(
+  '/:productId',
+  validatorHandler(getAllProductUnitPricesSchema, 'params'),
   async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const unitPrice = await service.findOne(id);
-    res.json(unitPrice);
-  } catch (error) {
-    next(error);
+    try {
+      const { productId } = req.params;
+      const unitPrice = await service.findAllForOneProduct(productId);
+      res.json(unitPrice);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
+
 router.post(
   '/',
   validatorHandler(createUnitPriceSchema, 'body'),
