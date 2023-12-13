@@ -3,11 +3,9 @@ const { createUnitPriceSchemaWithProducts } = require('./unit-price.schema');
 
 const id = Joi.number().integer();
 const name = Joi.string().min(3).max(15);
-const price = Joi.number().integer().min(10);
 const description = Joi.string().min(10);
 const image = Joi.string().uri();
 const categoryId = Joi.number().integer();
-const blocked = Joi.boolean();
 
 const price_min = Joi.number().integer();
 const price_max = Joi.number().integer();
@@ -17,7 +15,6 @@ const limit = Joi.number().integer();
 const offset = Joi.number().integer();
 const product = Joi.object({
   name: name.required(),
-  price: price.required(),
   description: description.required(),
   image: image.required(),
   categoryId: categoryId.required(),
@@ -30,11 +27,9 @@ const createProductSchema = Joi.object({
 
 const updateProductSchema = Joi.object({
   name: name,
-  price: price,
   image: image,
   description: description,
   categoryId,
-  blocked,
 });
 
 const getProductSchema = Joi.object({
@@ -44,7 +39,6 @@ const getProductSchema = Joi.object({
 const queryProductSchema = Joi.object({
   limit,
   offset,
-  price,
   price_min,
   price_max: Joi.when('price_min', {
     is: Joi.exist(),

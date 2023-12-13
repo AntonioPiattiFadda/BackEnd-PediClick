@@ -23,15 +23,6 @@ const ProductSchema = {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  blocked: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
-  price: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,

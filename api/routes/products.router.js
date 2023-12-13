@@ -6,7 +6,7 @@ const {
   createProductSchema,
   updateProductSchema,
   getProductSchema,
-  queryProductSchema,
+  // queryProductSchema,
 } = require('./../schemas/product.schema');
 
 const router = express.Router();
@@ -15,10 +15,10 @@ const service = new ProductsService();
 //NOTE - No estan validados los endpoints
 router.get(
   '/',
-  validatorHandler(queryProductSchema, 'query'),
+  // validatorHandler(queryProductSchema, 'query'),
   async (req, res, next) => {
     try {
-      const products = await service.find(req.query);
+      const products = await service.find();
       res.json(products);
     } catch (error) {
       next(error);
