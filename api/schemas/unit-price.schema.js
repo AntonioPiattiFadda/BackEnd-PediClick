@@ -27,7 +27,6 @@ const createUnitPriceSchema = Joi.object({
 const updateUnitPriceSchema = Joi.object({
   name: name,
   value: value,
-  productId,
   blocked,
 });
 
