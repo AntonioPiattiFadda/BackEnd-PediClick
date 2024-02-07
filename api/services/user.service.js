@@ -11,7 +11,7 @@ class UserService {
     const newUser = await models.User.create({
       ...data,
       password: hash,
-    });
+    }); 
     delete newUser.dataValues.password;
     return newUser;
   }
