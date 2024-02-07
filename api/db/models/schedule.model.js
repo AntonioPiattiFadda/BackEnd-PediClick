@@ -12,6 +12,7 @@ const ScheduleSchema = {
   day: {
     allowNull: false,
     type: DataTypes.STRING,
+    unique: false,
   },
   firstStartAt: {
     allowNull: false,
@@ -38,13 +39,14 @@ const ScheduleSchema = {
   userId: {
     allowNull: false,
     type: DataTypes.INTEGER,
+    unique: false,
     field: 'user_id',
     references: {
       model: 'users',
       key: 'id',
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
+    onDelete: 'CASCADE',
   },
 };
 
