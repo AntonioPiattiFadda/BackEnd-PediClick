@@ -16,10 +16,9 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// 'http://localhost:8080',
-// 'http://localhost:3000',
-
 const whitelist = [
+  'http://localhost:8080',
+  'http://localhost:3000',
   'https://admin-eshop-eight.vercel.app',
   'https://interface-cliente-react-os.vercel.app',
   'https://api-pediclick.onrender.com',
